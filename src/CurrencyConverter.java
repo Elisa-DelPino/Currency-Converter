@@ -13,12 +13,14 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +63,7 @@ public class CurrencyConverter extends JFrame
 				{
 					CurrencyConverter frame = new CurrencyConverter();
 					frame.setLocationRelativeTo(null);
+										
 					frame.setVisible(true); 
 				} catch (Exception e) 
 				{
@@ -73,6 +76,14 @@ public class CurrencyConverter extends JFrame
 	public CurrencyConverter() 
 	{
 		super("CURRENCY CONVERTER"); 
+		
+		URL url = getClass().getResource("images/icon.png");
+		
+		ImageIcon img = new ImageIcon(url);
+		Image imgLogo = img.getImage();
+		setIconImage(imgLogo);
+		
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 150, 400, 400);
@@ -215,7 +226,7 @@ public class CurrencyConverter extends JFrame
 	    this.pack();
 
 	    // Optionnel : pour que la fenêtre reste centrée à l’écran
-	    this.setLocationRelativeTo(null);
+	    //this.setLocationRelativeTo(null);
 	}
 
 	
@@ -224,24 +235,15 @@ public class CurrencyConverter extends JFrame
 	{
 		
 		// Charger Image 
-		ImageIcon imageIcon = new ImageIcon("src/images/" + imageCurrency + ".png" );
-		Image image = imageIcon.getImage();
-		
-		
-		 /* 
-		// Redimensionner Image
-		int labelWidth = 80;
-		int labelHeight = 53;
-		Image resizedImage = image.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-		ImageIcon resizedIcon = new ImageIcon(resizedImage);
-		 */
-		
-		
-     
-		
-		JLabel imageLabel = new JLabel(imageIcon);
-		
-		return imageLabel; 
+		URL url = getClass().getResource("/images/" + imageCurrency + ".png");
+		if (url == null) {
+		    System.err.println("Image non trouvée : /images/" + imageCurrency + ".png");
+		    return new JLabel();  // ou un label vide ou une image par défaut
+		} else {
+		    ImageIcon imageIcon = new ImageIcon(url);
+		    return new JLabel(imageIcon);
+		}
+
 		
 	}
 	
